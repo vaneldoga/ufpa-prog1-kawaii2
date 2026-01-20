@@ -15,6 +15,10 @@ public:
 	std::vector<std::string> immunities;
 	std::vector<std::string> egg_group;
 
+	bool
+	is_ready
+	(void);
+
 	// Parses a key-value formatted string.
 	//
 	// One key-value pair per line, blank line separating pokemons.

@@ -1,18 +1,12 @@
 #include <string>
-#include <list>
+#include <vector>
 
 #include "pokemon.hpp"
 
 class Pokedex
 {
-private:
-	// --add <pokemon>
-	bool
-	parse_command_line_add_pokemon
-	(char *to_be_parsed);
-
 protected:
-	std::list<Pokemon> pokemons;
+	std::vector<Pokemon> pokemons;
 
 public:
 	enum class SortType
@@ -23,12 +17,13 @@ public:
 		WEIGTH
 	};
 
-	bool
-	parse_command_line
-	(
-		int argc,
-		char **argv
-	);
+	int
+	size
+	(void);
+
+	Pokemon
+	get_pokemon
+	(int index);
 
 	// Validates and inserts pokemon.
 	bool

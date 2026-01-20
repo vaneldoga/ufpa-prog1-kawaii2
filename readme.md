@@ -38,6 +38,4 @@ Example:
 
  - C style IO (cstdio library) rather than C++ style IO (iostream), proeminently for printing and scanning.
 
- - std::list instead std::vector for entries in pokedex.
-
  - Optional graphical interface (probably either GTK or Raylib).
