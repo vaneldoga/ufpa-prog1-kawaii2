@@ -16,23 +16,7 @@ public:
 	std::string strengths[5];
 	std::string egg_group[5];
 
-	// Parses a key-value formatted string.
-	//
-	// One key-value pair per line, blank line separating pokemons.
-	//
-	// Square brackets for lists.
-	//
-	// Example:
-	//     id: 45
-	//     name: vileplume
-	//     ability: chlorophyll
-	//     evolution stage: 3
-	//     weight: 41.0
-	//     generation: 1
-	//     weaknesses: [fire, ice, flying, psychic]
-	//
-	// I'm prevented to use json or something alike :/
-	bool
-	parse_string
-	(std::string);
+	void
+	print
+	(void);
 };

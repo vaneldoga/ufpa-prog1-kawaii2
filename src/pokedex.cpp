@@ -8,40 +8,48 @@ Pokedex::size
 (void)
 {
 	int size = 0;
-	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
-	while (current_entry != NULL)
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr)
 	{
-		current_entry = current_entry->successor.get();
+		current_entry = current_entry->successor;
 		size++;
 	}
 	return size;
 }
 
 Pokemon
-Pokedex::get
-(int index)
+Pokedex::get_by_name
+(std::string name)
 {
-	return first_pokemon_entry->pokemon;
+	Pokemon pokemon;
+	pokemon.name = "";
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr && pokemon.name == "")
+	{
+		if (current_entry->pokemon.name == name)
+		{ pokemon = current_entry->pokemon; }
+		current_entry = current_entry->successor;
+	}
+	return pokemon;
 }
 
 bool
 Pokedex::add
 (Pokemon pokemon)
 {
-	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
-	if (current_entry == NULL) {
-		first_pokemon_entry = std::make_unique<PokedexPokemonEntry>();
-		first_pokemon_entry->predecessor = NULL;
-		first_pokemon_entry->successor = NULL;
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	if (current_entry == nullptr) {
+		first_pokemon_entry = std::make_shared<PokedexPokemonEntry>();
 		first_pokemon_entry->pokemon = pokemon;
 		return true;
 	}
 	else
 	{
-		while (current_entry->successor != NULL)
-		{ current_entry = current_entry->successor.get(); }
-		current_entry->successor = std::make_unique<PokedexPokemonEntry>();
+		while (current_entry->successor != nullptr)
+		{ current_entry = current_entry->successor; }
+		current_entry->successor = std::make_shared<PokedexPokemonEntry>();
 		current_entry->successor->pokemon = pokemon;
+		current_entry->successor->predecessor = current_entry;
 		return true;
 	}
 }
@@ -50,15 +58,21 @@ bool
 Pokedex::remove
 (std::string name)
 {
-	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
-	while (current_entry != NULL)
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr)
 	{
 		if (current_entry->pokemon.name != name)
-		{ current_entry = current_entry->successor.get(); }
+		{ current_entry = current_entry->successor; }
+		else if (current_entry == first_pokemon_entry)
+		{ first_pokemon_entry  = current_entry->successor; }
 		else
 		{
-			current_entry->predecessor->successor =  current_entry->successor;
-			current_entry->successor->predecessor =  current_entry->predecessor;
+			std::shared_ptr<PokedexPokemonEntry> left_orphan = current_entry->predecessor.lock();
+			std::shared_ptr<PokedexPokemonEntry> right_orphan = current_entry->successor;
+			if (left_orphan != nullptr)
+			{ left_orphan->successor = right_orphan; }
+			if (right_orphan != nullptr)
+			{ right_orphan->predecessor = left_orphan; }
 			return true;
 		}
 	}
@@ -69,11 +83,12 @@ void
 Pokedex::print_to_stdout
 (void)
 {
-	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
-	while (current_entry != NULL)
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr)
 	{
-		std::cout << current_entry->pokemon.name << std::endl;
-		current_entry = current_entry->successor.get();
+		current_entry->pokemon.print();
+		std::cout << std::endl;
+		current_entry = current_entry->successor;
 	}
 }
 
@@ -206,6 +221,21 @@ void
 Pokedex::sort
 (Pokedex::SortType type)
 {
-	(void)type;
+	std::shared_ptr<PokedexPokemonEntry> current_undefined = first_pokemon_entry;
+	while (current_undefined != nullptr)
+	{
+		std::shared_ptr<PokedexPokemonEntry> best_candidate = current_undefined;
+		std::shared_ptr<PokedexPokemonEntry> current_candidate = current_undefined;
+		while (current_candidate != nullptr)
+		{
+			if (type == SortType::ID  && current_candidate->pokemon.global_id < best_candidate->pokemon.global_id)
+			{ best_candidate = current_candidate; }
+			current_candidate = current_candidate->successor;
+		}
+		Pokemon tmp = current_undefined->pokemon;
+		current_undefined->pokemon = best_candidate->pokemon;
+		best_candidate->pokemon = tmp;
+		current_undefined = current_undefined->successor;
+	}
 	return;
 }

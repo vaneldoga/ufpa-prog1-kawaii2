@@ -4,7 +4,7 @@
 class PokedexPokemonEntry
 {
 public:
-	std::shared_ptr<PokedexPokemonEntry> predecessor;
+	std::weak_ptr<PokedexPokemonEntry> predecessor;
 	std::shared_ptr<PokedexPokemonEntry> successor;
 	Pokemon pokemon;
 };

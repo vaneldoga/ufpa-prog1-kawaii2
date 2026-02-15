@@ -23,8 +23,8 @@ public:
 	(void);
 
 	Pokemon
-	get
-	(int index);
+	get_by_name
+	(std::string name);
 
 	// Validates and inserts pokemon.
 	bool
@@ -35,6 +35,7 @@ public:
 	remove
 	(std::string name);
 
+	// Prints in a readable format.
 	void
 	print_to_stdout
 	(void);
