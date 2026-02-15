@@ -15,7 +15,7 @@ public:
 		ID,
 		EVOLTUION_STAGE,
 		GENERATION,
-		WEIGTH
+		WEIGHT
 	};
 
 	int

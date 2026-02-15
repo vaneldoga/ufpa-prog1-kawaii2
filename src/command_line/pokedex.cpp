@@ -103,6 +103,8 @@ CommandLinePokedex::parse
 		{
 			if (strcmp(argv[i+1], "id") == 0)
 			{ pokedex.sort(Pokedex::SortType::ID); }
+			else if (strcmp(argv[i+1], "weight") == 0)
+			{ pokedex.sort(Pokedex::SortType::WEIGHT); }
 			else
 			{
 				perror("Unknown sorting type.\n");

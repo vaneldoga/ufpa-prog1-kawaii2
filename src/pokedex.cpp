@@ -233,7 +233,11 @@ Pokedex::sort
 		std::shared_ptr<PokedexPokemonEntry> current_candidate = current_undefined;
 		while (current_candidate != nullptr)
 		{
-			if (type == SortType::ID  && current_candidate->pokemon.global_id < best_candidate->pokemon.global_id)
+			if
+			(
+				(type == SortType::ID  && current_candidate->pokemon.global_id < best_candidate->pokemon.global_id)
+				|| (type == SortType::WEIGHT && current_candidate->pokemon.weight < best_candidate->pokemon.weight)
+			)
 			{ best_candidate = current_candidate; }
 			current_candidate = current_candidate->successor;
 		}
