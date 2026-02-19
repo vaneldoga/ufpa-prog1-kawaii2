@@ -32,6 +32,7 @@ executable('pokedex',
 	],
 	dependencies: [
 		raylib_dep,
-		raygui_dependency
+		raygui_dependency,
+		dependency('fontconfig')
 	],
 )

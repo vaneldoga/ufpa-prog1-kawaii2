@@ -18,6 +18,8 @@ public:
 	run
 	(void);
 
+	const char* font_pattern_string = NULL;
+
 protected:
 	Pokedex pokedex;
 	char source_filename[256];
@@ -32,5 +34,10 @@ protected:
 	// Returns true to go to State START, or false to quit.
 	bool
 	start
+	(void);
+
+	// Helper for run
+	void
+	load_font
 	(void);
 };

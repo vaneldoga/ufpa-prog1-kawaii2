@@ -3,6 +3,8 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include <cstring>
+#include <iostream>
+#include <fontconfig/fontconfig.h>
 
 bool
 GraphicalPokedex::start
@@ -81,6 +83,37 @@ GraphicalPokedex::view
 	return GraphicalPokedex::State::START;
 }
 
+void
+GraphicalPokedex::load_font
+(void)
+{
+	if (!FcInit())
+	{ perror("Couldn't start FontConfig.\n"); return; }
+	if (font_pattern_string == NULL)
+	{ font_pattern_string = "Inconsolata:style=Bold"; }
+	FcPattern *pattern = FcNameParse((const FcChar8*)font_pattern_string);
+	FcConfigSubstitute(NULL, pattern, FcMatchPattern);
+	FcDefaultSubstitute(pattern);
+	FcResult result;
+	FcPattern* match = FcFontMatch(NULL, pattern, &result);
+	// If found, use it, otherwise keep default.
+	if (match)
+	{
+		FcChar8* file = NULL;
+		if (FcPatternGetString(match, FC_FILE, 0, &file) == FcResultMatch)
+		{ printf("Found file: %s\n", file); }
+		else
+		{ perror("Font found, but no path property\n."); }
+		std::cout << (char*)file << std::endl;
+		Font pokedex_font = LoadFontEx((char*)file, 18, 0, 0);
+		GuiSetFont(pokedex_font);
+		GuiSetStyle(DEFAULT, TEXT_SIZE, 18);
+	}
+	FcPatternDestroy(match);
+	FcPatternDestroy(pattern);
+	FcFini();
+}
+
 bool
 GraphicalPokedex::run
 (void)
@@ -90,9 +123,7 @@ GraphicalPokedex::run
 
 	bool should_close = false;
 	GraphicalPokedex::State state = GraphicalPokedex::State::START;
-	Font myFont = LoadFontEx("/usr/share/fonts/TTF/Inconsolata-Medium.ttf", 18, 0, 0);
-	GuiSetFont(myFont);
-	GuiSetStyle(DEFAULT, TEXT_SIZE, 18);
+	load_font();
 
 	while (!should_close)
 	{
