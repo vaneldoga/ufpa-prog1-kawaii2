@@ -1,2 +1,7 @@
 build/
-subprojects/
+# Downloaded stuff
+subprojects/*
+# Don't ignore the configuration files
+!subprojects/*.wrap
+# Don't ignore custom build patches
+!subprojects/packagefiles/
