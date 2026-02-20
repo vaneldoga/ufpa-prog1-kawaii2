@@ -54,7 +54,7 @@ GraphicalPokedex::view
 		Pokemon current_pokemon = pokedex.at(current_position);
 		BeginDrawing();
 		ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-		snprintf(position_indicator, sizeof(position_indicator), "%d/%d", current_position+1, pokedex.size());
+		snprintf(position_indicator, sizeof(position_indicator), "%d/%d", current_position+1, pokedex.get_size());
 		GuiLabel({ 40, 40, 50, 20 }, position_indicator);
 		GuiLabel({ 270, 180, 260, 20 }, current_pokemon.name.c_str());
 		GuiSetStyle(BUTTON, BASE_COLOR_NORMAL, ColorToInt(SKYBLUE));
@@ -75,7 +75,7 @@ GraphicalPokedex::view
 		else if
 		(
 			(is_button_pressed_next || IsKeyPressed(KEY_RIGHT))
-			&& current_position < pokedex.size()-1
+			&& current_position < pokedex.get_size()-1
 		)
 		{ current_position++; }
 		EndDrawing();

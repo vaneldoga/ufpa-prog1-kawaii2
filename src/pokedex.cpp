@@ -4,18 +4,9 @@
 #include <iostream>
 
 int
-Pokedex::size
+Pokedex::get_size
 (void)
-{
-	int size = 0;
-	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
-	while (current_entry != nullptr)
-	{
-		current_entry = current_entry->successor;
-		size++;
-	}
-	return size;
-}
+{ return size; }
 
 Pokemon
 Pokedex::at
@@ -31,7 +22,7 @@ Pokedex::at
 }
 
 Pokemon
-Pokedex::get_by_name
+Pokedex::get
 (std::string name)
 {
 	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
@@ -47,9 +38,11 @@ Pokedex::add
 (Pokemon pokemon)
 {
 	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
-	if (current_entry == nullptr) {
+	if (current_entry == nullptr)
+	{
 		first_pokemon_entry = std::make_shared<PokedexPokemonEntry>();
 		first_pokemon_entry->pokemon = pokemon;
+		size++;
 		return true;
 	}
 	else
@@ -59,8 +52,10 @@ Pokedex::add
 		current_entry->successor = std::make_shared<PokedexPokemonEntry>();
 		current_entry->successor->pokemon = pokemon;
 		current_entry->successor->predecessor = current_entry;
+		size++;
 		return true;
 	}
+	return false;
 }
 
 bool
@@ -82,14 +77,29 @@ Pokedex::remove
 			{ left_orphan->successor = right_orphan; }
 			if (right_orphan != nullptr)
 			{ right_orphan->predecessor = left_orphan; }
+			size--;
 			return true;
 		}
 	}
 	return false;
 }
 
+bool
+Pokedex::update
+(std::string name, Pokemon new_value)
+{
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr)
+	{
+		if (current_entry->pokemon.name == name)
+		{ current_entry->pokemon = new_value; return true; }
+		else { current_entry = current_entry->successor; }
+	}
+	return false;
+}
+
 void
-Pokedex::print_to_stdout
+Pokedex::print
 (void)
 {
 	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;

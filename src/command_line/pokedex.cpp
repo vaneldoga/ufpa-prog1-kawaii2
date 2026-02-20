@@ -33,9 +33,21 @@ const char *CommandLinePokedex::help_message =
 "\n"
 "\t--add <pokemon representation>"
 "\n\n"
-"Deleting a pokemon by its name:"
+"# Selection"
+"\n\n"
+"Remove and edit operations need a previously selected pokemon."
 "\n"
-"\t--remove <pokemon name>"
+"\t--select <name>"
+"\n\n"
+"Deleting a selected pokemon:"
+"\n"
+"\t--remove"
+"\n\n"
+"Editting a selected pokemon:"
+"\n"
+"\t--set-id <id>"
+"\n"
+"\t--set-name <name>"
 "\n\n"
 "# Examples"
 "\n\n"
@@ -63,6 +75,7 @@ CommandLinePokedex::parse
 		return ParsingResult::ERROR;
 	}
 
+	std::string selected_name = "";
 	// Look for keys and delegate their values to specific functions
 	for(int i = 1; i < argc; i++)
 	{
@@ -73,31 +86,75 @@ CommandLinePokedex::parse
 			printf("%s", help_message);
 			return ParsingResult::GRACEFUL_EXIT;
 		}
-		// --add <pokemon>
-		else if (strcmp(key, "--add") == 0)
-		{
-			pokedex.load_pokemon(argv[i+1]);
-		}
-		// --remove <pokemon>
-		else if (strcmp(key, "--remove") == 0)
-		{
-			if (pokedex.remove(argv[i+1]))
-			{ printf("Removed %s from pokedex.\n.", argv[i+1]); }
-			else { fprintf(stderr, "Pokemon %s not found.\n", argv[i+1]); }
-		}
 		// Source file
 		// --source <file>
 		else if (strcmp(key, "--source") == 0 && i == 1)
 		{
 			pokedex.load_from_file(argv[++i]);
 		}
+		// --add <pokemon>
+		else if (strcmp(key, "--add") == 0)
+		{
+			pokedex.load_pokemon(argv[i+1]);
+		}
+		// --select <name>
+		else if (strcmp(key, "--select") == 0)
+		{ selected_name = argv[i+1]; }
+		// --unselect
+		else if (strcmp(key, "--unselect") == 0)
+		{ selected_name = ""; }
+		// --remove
+		else if (strcmp(key, "--remove") == 0)
+		{
+			if (selected_name.empty())
+			{ perror("Error. No pokemon selected.\n"); return ParsingResult::ERROR; }
+			else if (pokedex.remove(selected_name))
+			{ printf("Removed %s from pokedex.\n.", argv[i+1]); selected_name = ""; }
+			else { fprintf(stderr, "Error. Pokemon %s not found.\n", argv[i+1]); }
+		}
+		// --set-<field> <value>
+		else if (strncmp(key, "--set-", strlen("--set-")) == 0)
+		{
+			// Fetch
+			Pokemon pokemon = pokedex.get(selected_name);
+			// Change
+			const char* field = key+strlen("--set-"); // Skip --set-.
+			static const char* field_id = "id";
+			static const char* field_name = "name";
+			static const char* field_evolution_stage = "stage";
+			static const char* field_weight = "weight";
+			if (strncmp(field, field_id, strlen(field_id)) == 0)
+			{ pokemon.global_id = std::stoi(argv[i+1]); }
+			else if (strncmp(field, field_evolution_stage, strlen(field_evolution_stage)) == 0)
+			{ pokemon.evolution_stage = std::stoi(argv[i+1]); }
+			else if (strncmp(field, field_weight, strlen(field_weight)) == 0)
+			{ pokemon.weight = std::atof(argv[i+1]); }
+			// TODO: bug here, name isn't set.
+			else if (strncmp(field, field_name, strlen(field_name)) == 0)
+			{ pokemon.name = argv[i]; }
+			else
+			{
+				fprintf(stderr, "Error. Unknown field to set: %s.\n", field);
+				return ParsingResult::ERROR;
+			}
+			// Update
+			pokedex.update(selected_name, pokemon);
+		}
+		// --print
+		// Pokemon (if selected) or entire pokedex
 		else if (strcmp(key, "--print") == 0)
 		{
-			pokedex.print_to_stdout();
+			if (selected_name.empty())
+			{ pokedex.print(); }
+			else
+			{
+				Pokemon pokemon = pokedex.get(selected_name);
+				pokemon.print();
+			}
 		}
 		else if (strcmp(key, "--size") == 0)
 		{
-			std::cout << pokedex.size() << std::endl;
+			std::cout << pokedex.get_size() << std::endl;
 		}
 		else if (strcmp(key, "--sort") == 0)
 		{
@@ -111,13 +168,11 @@ CommandLinePokedex::parse
 				return ParsingResult::ERROR;
 			}
 		}
-		else if (strcmp(key, "--show") == 0)
+		// We know it is a flag (or should be), but don't recognize it.
+		else if (key[0] == '-')
 		{
-			Pokemon pokemon = pokedex.get_by_name(argv[i+1]);
-			if (pokemon.name == "")
-			{ perror("Pokemon not found.\n"); return ParsingResult::ERROR; }
-			else
-			{ pokemon.print(); }
+			fprintf(stderr, "Unknown flag: %s.\n", key);
+			return ParsingResult::ERROR;
 		}
 	}
 	return ParsingResult::CONTINUE;

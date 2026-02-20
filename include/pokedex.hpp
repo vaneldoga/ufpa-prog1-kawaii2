@@ -8,6 +8,7 @@ class Pokedex
 {
 protected:
 	std::shared_ptr<PokedexPokemonEntry> first_pokemon_entry;
+	int size = 0;
 
 public:
 	enum class SortType
@@ -19,7 +20,7 @@ public:
 	};
 
 	int
-	size
+	get_size
 	(void);
 
 	// Get by position
@@ -29,7 +30,7 @@ public:
 
 	// Get by name
 	Pokemon
-	get_by_name
+	get
 	(std::string name);
 
 	// Validates and inserts pokemon.
@@ -37,13 +38,19 @@ public:
 	add
 	(Pokemon pokemon);
 
+	// Removes by name
 	bool
 	remove
 	(std::string name);
 
+	// Finds the entry with a given name and updates it with the new value.
+	bool
+	update
+	(std::string name, Pokemon new_value);
+
 	// Prints in a readable format.
 	void
-	print_to_stdout
+	print
 	(void);
 
 	bool
