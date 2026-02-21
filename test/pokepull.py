@@ -10,7 +10,7 @@ def filltipagem(pkmn_types, weaknesses, resistances, immunities):
         "Dragon", "Steel", "Dark", "Fairy"
     ]
 
-    type_chart = { # isso aq pedi pro gemini preencher pq misericordia preencher isso aq na mao, a logica eh simples, so trabalhoso
+    type_chart = { #logica dos tipos(disponivel no pokemon.db tb)
         "Normal":   {"Rock": 0.5, "Ghost": 0.0, "Steel": 0.5},
         "Fire":     {"Fire": 0.5, "Water": 0.5, "Grass": 2.0, "Ice": 2.0, "Bug": 2.0, "Rock": 0.5, "Dragon": 0.5, "Steel": 2.0},
         "Water":    {"Fire": 2.0, "Water": 0.5, "Grass": 0.5, "Ground": 2.0, "Rock": 2.0, "Dragon": 0.5},
@@ -85,6 +85,6 @@ with open("dex.txt", 'w', encoding='utf-8') as file:
         file.write(f"resistances: {', '.join(resistencias)};\n")
         file.write(f"immunities: {', '.join(imunidades)};\n")
         file.write(f"egg group: {', '.join(egg_groups)};\n\n")
-        
+        #por algum motivo algumas vezes parece q ele nao gera dex.txt, nao testei ainda pra saber o pq, uma vez q o arquivo final ja tinha sido gerado
         print(f"{pokename} gerado;")
 print("cabo")
