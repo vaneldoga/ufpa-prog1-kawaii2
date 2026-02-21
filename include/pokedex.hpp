@@ -28,6 +28,16 @@ public:
 	at
 	(int position);
 
+	// Get by ID
+	Pokemon
+	get_by_id
+	(unsigned int id);
+
+	// Get Interval
+	void
+	print_range
+	(int start, int end);
+
 	// Get by name
 	Pokemon
 	get

@@ -273,3 +273,42 @@ Pokedex::sort
 	}
 	return;
 }
+
+// Search pokemon by ID.
+Pokemon
+Pokedex::get_by_id
+(unsigned int id)
+{
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr && current_entry->pokemon.global_id != id)
+	{ current_entry = current_entry->successor; }
+	
+	if (current_entry == nullptr)
+	{ Pokemon pokemon; pokemon.name = ""; return pokemon; }
+	
+	return current_entry->pokemon;
+}
+
+
+void
+Pokedex::print_range
+(int start, int end)
+{
+	if (start < 1) start = 1;
+	int current_position = 1;
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	
+	while (current_entry != nullptr && current_position < start)
+	{
+		current_entry = current_entry->successor;
+		current_position++;
+	}
+	
+	while (current_entry != nullptr && current_position <= end)
+	{
+		current_entry->pokemon.print();
+		std::cout << std::endl;
+		current_entry = current_entry->successor;
+		current_position++;
+	}
+}
