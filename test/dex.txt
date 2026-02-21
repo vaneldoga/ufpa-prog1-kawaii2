@@ -10812,7 +10812,7 @@ immunities: Poison, Psychic;
 egg group: Human-Like;
 
 id: 984;
-name: Great Tusk;
+name: Great-Tusk;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 320.0;
@@ -10823,7 +10823,7 @@ immunities: Electric;
 egg group: Undiscovered;
 
 id: 985;
-name: Scream Tail;
+name: Scream-Tail;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 8.0;
@@ -10834,7 +10834,7 @@ immunities: Dragon;
 egg group: Undiscovered;
 
 id: 986;
-name: Brute Bonnet;
+name: Brute-Bonnet;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 21.0;
@@ -10845,7 +10845,7 @@ immunities: Psychic;
 egg group: Undiscovered;
 
 id: 987;
-name: Flutter Mane;
+name: Flutter-Mane;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 4.0;
@@ -10856,7 +10856,7 @@ immunities: Normal, Fighting, Dragon;
 egg group: Undiscovered;
 
 id: 988;
-name: Slither Wing;
+name: Slither-Wing;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 92.0;
@@ -10867,7 +10867,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 989;
-name: Sandy Shocks;
+name: Sandy-Shocks;
 abilities: Protosynthesis;
 base stat total: 570;
 weight: 60.0;
@@ -10878,7 +10878,7 @@ immunities: Electric;
 egg group: Undiscovered;
 
 id: 990;
-name: Iron Treads;
+name: Iron-Treads;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 240.0;
@@ -10889,7 +10889,7 @@ immunities: Electric, Poison;
 egg group: Undiscovered;
 
 id: 991;
-name: Iron Bundle;
+name: Iron-Bundle;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 11.0;
@@ -10900,7 +10900,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 992;
-name: Iron Hands;
+name: Iron-Hands;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 380.7;
@@ -10911,7 +10911,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 993;
-name: Iron Jugulis;
+name: Iron-Jugulis;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 111.0;
@@ -10922,7 +10922,7 @@ immunities: Ground, Psychic;
 egg group: Undiscovered;
 
 id: 994;
-name: Iron Moth;
+name: Iron-Moth;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 36.0;
@@ -10933,7 +10933,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 995;
-name: Iron Thorns;
+name: Iron-Thorns;
 abilities: Quark Drive;
 base stat total: 570;
 weight: 303.0;
@@ -11043,7 +11043,7 @@ immunities: Psychic;
 egg group: Undiscovered;
 
 id: 1005;
-name: Roaring Moon;
+name: Roaring-Moon;
 abilities: Protosynthesis;
 base stat total: 590;
 weight: 380.0;
@@ -11054,7 +11054,7 @@ immunities: Psychic;
 egg group: Undiscovered;
 
 id: 1006;
-name: Iron Valiant;
+name: Iron-Valiant;
 abilities: Quark Drive;
 base stat total: 590;
 weight: 35.0;
@@ -11087,7 +11087,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 1009;
-name: Walking Wake;
+name: Walking-Wake;
 abilities: Protosynthesis;
 base stat total: 590;
 weight: 280.0;
@@ -11098,7 +11098,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 1010;
-name: Iron Leaves;
+name: Iron-Leaves;
 abilities: Quark Drive;
 base stat total: 590;
 weight: 125.0;
@@ -11208,7 +11208,7 @@ immunities: none;
 egg group: Dragon, Grass;
 
 id: 1020;
-name: Gouging Fire;
+name: Gouging-Fire;
 abilities: Protosynthesis;
 base stat total: 590;
 weight: 590.0;
@@ -11219,7 +11219,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 1021;
-name: Raging Bolt;
+name: Raging-Bolt;
 abilities: Protosynthesis;
 base stat total: 590;
 weight: 480.0;
@@ -11230,7 +11230,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 1022;
-name: Iron Boulder;
+name: Iron-Boulder;
 abilities: Quark Drive;
 base stat total: 590;
 weight: 162.5;
@@ -11241,7 +11241,7 @@ immunities: none;
 egg group: Undiscovered;
 
 id: 1023;
-name: Iron Crown;
+name: Iron-Crown;
 abilities: Quark Drive;
 base stat total: 590;
 weight: 156.0;
