@@ -90,29 +90,59 @@ main
                     { std::cout << "File loaded successfully\n"; }
                     break;
                 }
-                case 2:
-                {
-                    Pokemon p;
-            
-                    int current_size = pokedex.get_size();
-                    if (current_size == 0)
-                    { p.global_id = 1; }
-                    else
-                    { p.global_id = pokedex.at(current_size - 1).global_id + 1; }
-                    
-                    std::cout << "ID: " << p.global_id << "\n";
-                    std::cout << "Name: ";
-                    std::cin >> p.name;
-                    std::cout << "Weight: ";
-                    std::cin >> p.weight;
-                    std::cout << "Generation: ";
-                    std::cin >> p.generation;
-                    
-                    if (pokedex.add(p))
-                    { std::cout << "Pokemon added to the end of the Pokedex.\n"; }
-                    break;
-                }
-                case 3:
+                
+
+		case 2:
+		{
+		    Pokemon p;
+	
+		    int current_size = pokedex.get_size();
+		    if (current_size == 0)
+		    { p.global_id = 1; }
+		    else
+		    { p.global_id = pokedex.at(current_size - 1).global_id + 1; }
+			
+		    std::cout << "ID: " << p.global_id << "\n";
+			
+		    std::cout << "Name: ";
+		    std::cin >> std::ws;
+		    std::getline(std::cin, p.name);
+			
+		    std::cout << "Base stat total: ";
+		    std::cin >> p.base_stat_total;
+			
+		    std::cout << "Weight: ";
+		    std::cin >> p.weight;
+			
+		    std::cout << "Generation: ";
+		    std::cin >> p.generation;
+			
+		    std::cout << "Abilities: ";
+		    std::cin >> std::ws;
+		    std::getline(std::cin, p.abilities[0]);
+			
+		    std::cout << "Weaknesses: ";
+		    std::cin >> std::ws;
+		    std::getline(std::cin, p.weaknesses[0]);
+			
+		    std::cout << "Resistances: ";
+		    std::cin >> std::ws;
+		    std::getline(std::cin, p.resistances[0]);
+			
+		    std::cout << "Immunities: ";
+		    std::cin >> std::ws;
+		    std::getline(std::cin, p.immunities[0]);
+			
+		    std::cout << "Egg group: ";
+	            std::cin >> std::ws;
+		    std::getline(std::cin, p.egg_group[0]);
+		
+		    if (pokedex.add(p))
+		    { std::cout << "Pokemon added to the end of the Pokedex.\n"; }
+		    break;
+		    }
+
+		case 3:
                 {
                     std::cout << "Search by:\n1. Name\n2. ID\nChoose: ";
                     int search_opt;
